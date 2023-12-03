@@ -28,6 +28,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -38,6 +39,8 @@ import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import java.util.Locale
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,18 +64,44 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier
                     .background(Color(0xFF304dd2)) // Change to the desired color
             ) {
-                if (selectedPokemon == null) {
-                    MainContent(artState, randomPokemonNames) { pokemonName ->
-                        selectedPokemon =
-                            pokemonName // Update selectedPokemon when an item is clicked
+                Column {
+                    // Add a button to generate a new random list of Pokémon
+                    IconButton(onClick = {
+                        // Use lifecycleScope to launch a coroutine
+                        lifecycleScope.launch {
+                            randomPokemonNames = generateRandomPokemonNames(artState)
+                        }
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = "Refresh"
+                        )
                     }
-                } else {
-                    PokemonDetails(artState, selectedPokemon) {
-                        selectedPokemon = null // Reset selectedPokemon when back button is clicked
+
+                    if (selectedPokemon == null) {
+                        MainContent(artState, randomPokemonNames) { pokemonName ->
+                            selectedPokemon =
+                                pokemonName // Update selectedPokemon when an item is clicked
+                        }
+                    } else {
+                        PokemonDetails(artState, selectedPokemon) {
+                            selectedPokemon =
+                                null // Reset selectedPokemon when back button is clicked
+                        }
                     }
                 }
             }
         }
+
+    }
+}
+
+// Function to generate a new random list of Pokémon names
+private suspend fun generateRandomPokemonNames(artState: PokemonState): List<String> {
+    return (1..6).map {
+        val randomPokemon = artState.getRandomPokemon()
+        artState.getPokemon(randomPokemon.name)
+        randomPokemon.name
     }
 }
 
