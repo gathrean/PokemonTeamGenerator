@@ -3,6 +3,7 @@ package com.example.myminiapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,6 +32,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.capitalize
+import java.util.Locale
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +47,7 @@ class MainActivity : ComponentActivity() {
             var randomPokemonNames by remember { mutableStateOf<List<String>>(emptyList()) }
 
             LaunchedEffect(key1 = artState) {
-                randomPokemonNames = (1..9).map {
+                randomPokemonNames = (1..10).map {
                     val randomPokemon = artState.getRandomPokemon()
                     artState.getPokemon(randomPokemon.name)
                     randomPokemon.name
@@ -72,7 +75,7 @@ fun MainContent(
     onItemClick: (String) -> Unit
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(3),
+        columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(8.dp)
     ) {
         items(randomPokemonNames.size) { index ->
@@ -82,16 +85,22 @@ fun MainContent(
             if (pokemon != null) {
                 Box(
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(5.dp)
                         .clickable {
                             onItemClick(pokemonName) // Pass the clicked Pokemon's name
                         }
+                        .background(Color(0xFF53A3D8))
                 ) {
                     pokemon.images.frontDefault.let { imageUrl ->
+                        Text(
+                            text = pokemon.name.split("-").joinToString(" ") { it -> it.replaceFirstChar { it.uppercase(Locale.getDefault()) } },
+                            modifier = Modifier.padding(8.dp)
+                        )
+
                         AsyncImage(
                             model = imageUrl,
                             contentDescription = null,
-                            modifier = Modifier.size(100.dp)
+                            modifier = Modifier.size(200.dp)
                         )
                     }
                 }
