@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 fun MyBottomAppBar(
     onHomeClick: () -> Unit,
     onRefreshClick: () -> Unit,
-    onInfoClick: () -> Unit
+    onTeamsClick: () -> Unit
 ) {
     BottomAppBar(
         contentPadding = PaddingValues(8.dp)
@@ -82,7 +82,7 @@ fun MyBottomAppBar(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                IconButton(onClick = { onInfoClick() }) {
+                IconButton(onClick = { onTeamsClick() }) {
                     Icon(
                         imageVector = Icons.Default.AccountBox,
                         contentDescription = "My Teams",

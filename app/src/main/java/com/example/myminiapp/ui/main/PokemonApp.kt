@@ -69,7 +69,7 @@ fun PokemonApp(
     var showHome by remember { mutableStateOf(true) }
 
     // Flag to control displaying the saved teams
-    var showSavedTeams by remember { mutableStateOf(false) }
+    var showSavedTeamsList by remember { mutableStateOf(false) }
 
     // List of saved teams
     val savedTeams = remember { mutableStateListOf<List<String>>() }
@@ -111,7 +111,7 @@ fun PokemonApp(
                 }
             )
 
-        } else if (showSavedTeams) { // Display the saved teams if showSavedTeams is true
+        } else if (showSavedTeamsList) { // Display the saved teams if showSavedTeams is true
             SavedTeamsList(savedTeams = savedTeams)
 
         } else { // Display the main content otherwise
@@ -233,8 +233,9 @@ fun PokemonApp(
                     onHomeClick = {
                         showHome = true
                     },
-                    onInfoClick = {
+                    onTeamsClick = {
                         // Handle info click (go back to previously selected Pokemon details)
+                        showSavedTeamsList = true // Set the flag to display saved teams list
                     }
                 )
             }
