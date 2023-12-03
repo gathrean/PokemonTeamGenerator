@@ -77,7 +77,7 @@ fun PokemonApp(
                     modifier = Modifier.weight(1f)
                 ) {
                     MyTopAppBar(
-                        title = "PokéTeam Builder",
+                        title = "PokéTeam Generator",
                         showDetails = showDetails,
                         onBackClick = { showDetails = false }
                     )

@@ -23,7 +23,7 @@ fun HomeScreen(onGenerateClick: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Welcome to PokeTeam Builder!",
+            text = "Welcome to PokéTeam Generator!",
             color = Color.White,
             modifier = Modifier.padding(bottom = 16.dp)
         )
