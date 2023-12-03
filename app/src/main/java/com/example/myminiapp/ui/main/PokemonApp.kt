@@ -132,7 +132,7 @@ fun PokemonApp(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     // Row to display the Save Team and View Teams buttons
-                    GeneratePageButtons(
+                    ButtonsForGeneratePage(
                         onGenerateClick = {
                             coroutineScope.launch {
                                 isLoading = true // Set loading to true before generating
@@ -213,47 +213,6 @@ fun SavedTeamsList(savedTeams: List<List<String>>) {
                 fontSize = 18.sp,
                 color = Color.Black,
                 modifier = Modifier.padding(bottom = 8.dp)
-            )
-        }
-    }
-}
-
-@Composable
-fun GeneratePageButtons(
-    onGenerateClick: () -> Unit,
-    onSaveTeamClick: () -> Unit
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly
-    ) {
-        Button(
-            onClick = onGenerateClick,
-            modifier = Modifier.padding(bottom = 16.dp)
-        ) {
-            Text(
-                text = "Re-Generate ",
-                fontSize = 20.sp
-            )
-            Icon(
-                imageVector = Icons.Default.Refresh,
-                contentDescription = "Refresh",
-                modifier = Modifier.size(25.dp)
-            )
-        }
-
-        Button(
-            onClick = onSaveTeamClick,
-            modifier = Modifier.padding(bottom = 16.dp)
-        ) {
-            Text(
-                text = "Save Team ",
-                fontSize = 20.sp
-            )
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = "Save",
-                modifier = Modifier.size(25.dp)
             )
         }
     }
