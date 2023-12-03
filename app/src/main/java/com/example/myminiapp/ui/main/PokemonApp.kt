@@ -76,7 +76,7 @@ fun PokemonApp(
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
-                    MyTopBar(
+                    MyTopAppBar(
                         title = "PokéTeam Builder",
                         showDetails = showDetails,
                         onBackClick = { showDetails = false }
@@ -111,64 +111,6 @@ fun PokemonApp(
                     onInfoClick = {
                         // Handle info click (go back to previously selected Pokemon details)
                     }
-                )
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MyTopBar(title: String, showDetails: Boolean, onBackClick: () -> Unit) {
-    TopAppBar(
-        title = { Text(text = if (showDetails) "Pokemon Details" else title) },
-        navigationIcon = {
-            if (showDetails) {
-                IconButton(onClick = onBackClick) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back"
-                    )
-                }
-            }
-        }
-    )
-}
-
-@Composable
-fun MyBottomAppBar(
-    onHomeClick: () -> Unit,
-    onRefreshClick: () -> Unit,
-    onInfoClick: () -> Unit
-) {
-    BottomAppBar(
-        contentPadding = PaddingValues(8.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-
-            IconButton(onClick = { onRefreshClick() }) {
-                Icon(
-                    imageVector = Icons.Default.Refresh,
-                    contentDescription = "Refresh"
-                )
-            }
-
-            IconButton(onClick = { onHomeClick() }) {
-                Icon(
-                    imageVector = Icons.Default.Home,
-                    contentDescription = "Home"
-                )
-            }
-
-            IconButton(onClick = { onInfoClick() }) {
-                Icon(
-                    imageVector = Icons.Default.Info,
-                    contentDescription = "Info"
                 )
             }
         }
