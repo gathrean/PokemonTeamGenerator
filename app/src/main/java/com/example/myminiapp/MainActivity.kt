@@ -22,7 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.myminiapp.data.Pokemon
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,7 +86,7 @@ fun PokemonList(
                         }
                 ) {
                     // Display Pokemon sprite instead of the name
-                    pokemon.images.frontDefault?.let { imageUrl ->
+                    pokemon.images.frontDefault.let { imageUrl ->
                         AsyncImage(
                             model = imageUrl,
                             contentDescription = null,
