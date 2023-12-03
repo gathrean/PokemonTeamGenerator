@@ -151,25 +151,7 @@ fun PokemonApp(
                     if (!showDetails) {
                         // Display loading indicator while randomPokemonNames is null or isLoading is true
                         if (randomPokemonNames == null || isLoading) {
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally
-
-                                ) {
-                                    CircularProgressIndicator(
-                                        color = Color(0xFFf9f6ff),
-                                    ) // Loading indicator
-                                    Text(
-                                        text = "Generating...",
-                                        color = Color(0xFFf9f6ff),
-                                        fontSize = 20.sp,
-                                        modifier = Modifier.padding(top = 16.dp)
-                                    )
-                                }
-                            }
+                            LoadingCircle()
                         } else {
                             MainContent(artState, randomPokemonNames!!) { pokemonName ->
                                 selectedPokemonName = pokemonName
