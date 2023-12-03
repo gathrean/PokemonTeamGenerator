@@ -71,6 +71,7 @@ suspend fun generateRandomPokemonNames(artState: PokemonState): List<String> {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PokemonApp(
     artRepository: PokemonRepository
@@ -80,24 +81,32 @@ fun PokemonApp(
     var randomPokemonNames by remember { mutableStateOf<List<String>>(emptyList()) }
     val coroutineScope = rememberCoroutineScope()
 
-    LaunchedEffect(key1 = artState) {
-        randomPokemonNames = (1..6).map {
+    // Function to generate a new random list of Pokémon names
+    suspend fun generateRandomPokemonNames(): List<String> {
+        return (1..6).map {
             val randomPokemon = artState.getRandomPokemon()
             artState.getPokemon(randomPokemon.name)
             randomPokemon.name
         }
     }
+
+    LaunchedEffect(key1 = artState) {
+        randomPokemonNames = generateRandomPokemonNames()
+    }
+
     Box(
         modifier = Modifier
             .background(Color(0xFF304dd2)) // Change to the desired color
     ) {
         Column {
-            // Add a button to generate a new random list of Pokémon
+            TopAppBar(
+                title = { Text(text = "PokéTeam Builder") },
+            )
+
             Button(
                 onClick = {
-                    // Use coroutineScope to launch a coroutine
                     coroutineScope.launch {
-                        randomPokemonNames = generateRandomPokemonNames(artState)
+                        randomPokemonNames = generateRandomPokemonNames()
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
