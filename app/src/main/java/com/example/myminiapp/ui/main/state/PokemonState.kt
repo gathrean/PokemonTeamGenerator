@@ -1,4 +1,4 @@
-package com.example.myminiapp.ui.main
+package com.example.myminiapp.ui.main.state
 
 import com.example.myminiapp.data.PokemonRepository
 import com.example.myminiapp.data.Pokemon

@@ -1,4 +1,4 @@
-package com.example.myminiapp.ui.main
+package com.example.myminiapp.ui.main.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.myminiapp.ui.main.state.PokemonState
 import java.util.Locale
 
 @Composable

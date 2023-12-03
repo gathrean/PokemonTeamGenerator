@@ -1,4 +1,4 @@
-package com.example.myminiapp.ui.main
+package com.example.myminiapp.ui.main.app
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

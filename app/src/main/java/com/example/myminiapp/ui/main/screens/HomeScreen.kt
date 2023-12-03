@@ -1,4 +1,4 @@
-package com.example.myminiapp.ui.main
+package com.example.myminiapp.ui.main.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
