@@ -20,7 +20,10 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 
 @Composable
-fun HomeScreen(onGenerateClick: () -> Unit) {
+fun HomeScreen(
+    onGenerateClick: () -> Unit,
+    onSaveTeamClick: () -> Unit // Add a callback for Save Team click
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -43,7 +46,13 @@ fun HomeScreen(onGenerateClick: () -> Unit) {
         )
 
         Button(
-            onClick = { onGenerateClick() },
+            onClick = {
+                onGenerateClick()
+                onGenerateClick()
+                // Show the Save Team button after generating
+                // Assume the team is generated and ready to be saved
+                onSaveTeamClick()
+            },
             modifier = Modifier.padding(bottom = 16.dp)
         ) {
             Text(
