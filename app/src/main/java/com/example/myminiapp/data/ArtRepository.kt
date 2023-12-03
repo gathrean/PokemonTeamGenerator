@@ -7,6 +7,13 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 
 class ArtRepository(private val client: HttpClient) {
+
+    suspend fun getRandomPokemon(offset: Int): Pokemon {
+        val response = client.get("${ApiEndPoints.POKEMON.url}?offset=$offset&limit=1")
+        val pokemonList = Gson().fromJson(response.body<JsonObject>().getAsJsonArray("results"), Array<Pokemon>::class.java)
+        return pokemonList.first()
+    }
+
     suspend fun getPokemon(pokemonName: String): Pokemon {
         val response = client.get("${ApiEndPoints.POKEMON.url}/$pokemonName")
         return deserializeJson(response.body<JsonObject>().toString())

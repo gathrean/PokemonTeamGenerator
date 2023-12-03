@@ -49,12 +49,9 @@ fun MainContent(artState: ArtState) {
 
     LaunchedEffect(key1 = artState) {
         repeat(10) {
-            val randomPokemon = listOf(
-                "bulbasaur", "charmander", "squirtle", "pikachu",
-                "eevee", "jigglypuff", "snorlax", "mew", "magikarp", "ditto"
-            ).random()
-            randomPokemonNames.add(randomPokemon)
-            artState.getPokemon(randomPokemon)
+            val randomPokemon = artState.getRandomPokemon()
+            randomPokemonNames.add(randomPokemon.name)
+            artState.getPokemon(randomPokemon.name)
         }
     }
 
