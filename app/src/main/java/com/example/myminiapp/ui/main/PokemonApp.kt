@@ -132,54 +132,20 @@ fun PokemonApp(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     // Row to display the Save Team and View Teams buttons
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-
-                        // Button to generate a new team
-                        Button(
-                            onClick = {
-                                coroutineScope.launch {
-                                    isLoading = true // Set loading to true before generating
-                                    randomPokemonNames = generateRandomPokemonNames()
-                                    isLoading =
-                                        false // Set loading to false once generation is complete
-                                }
-                            },
-                            modifier = Modifier.padding(bottom = 16.dp)
-                        ) {
-                            Text(
-                                text = "Re-Generate ",
-                                fontSize = 20.sp
-                            )
-                            Icon(
-                                imageVector = Icons.Default.Refresh,
-                                contentDescription = "Refresh",
-                                modifier = Modifier.size(25.dp)
-                            )
+                    GeneratePageButtons(
+                        onGenerateClick = {
+                            coroutineScope.launch {
+                                isLoading = true // Set loading to true before generating
+                                randomPokemonNames = generateRandomPokemonNames()
+                                isLoading = false // Set loading to false once generation is complete
+                            }
+                        },
+                        onSaveTeamClick = {
+                            randomPokemonNames?.let { team ->
+                                saveTeam(team)
+                            }
                         }
-
-                        // Button to save the generated team
-                        Button(
-                            onClick = {
-                                randomPokemonNames?.let { team ->
-                                    saveTeam(team)
-                                }
-                            },
-                            modifier = Modifier.padding(bottom = 16.dp)
-                        ) {
-                            Text(
-                                text = "Save Team ",
-                                fontSize = 20.sp
-                            )
-                            Icon(
-                                imageVector = Icons.Default.Add,
-                                contentDescription = "Save",
-                                modifier = Modifier.size(25.dp)
-                            )
-                        }
-                    }
+                    )
 
                     // If showDetails is false, display the main content
                     if (!showDetails) {
@@ -265,6 +231,47 @@ fun SavedTeamsList(savedTeams: List<List<String>>) {
                 fontSize = 18.sp,
                 color = Color.Black,
                 modifier = Modifier.padding(bottom = 8.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun GeneratePageButtons(
+    onGenerateClick: () -> Unit,
+    onSaveTeamClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        Button(
+            onClick = onGenerateClick,
+            modifier = Modifier.padding(bottom = 16.dp)
+        ) {
+            Text(
+                text = "Re-Generate ",
+                fontSize = 20.sp
+            )
+            Icon(
+                imageVector = Icons.Default.Refresh,
+                contentDescription = "Refresh",
+                modifier = Modifier.size(25.dp)
+            )
+        }
+
+        Button(
+            onClick = onSaveTeamClick,
+            modifier = Modifier.padding(bottom = 16.dp)
+        ) {
+            Text(
+                text = "Save Team ",
+                fontSize = 20.sp
+            )
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = "Save",
+                modifier = Modifier.size(25.dp)
             )
         }
     }
