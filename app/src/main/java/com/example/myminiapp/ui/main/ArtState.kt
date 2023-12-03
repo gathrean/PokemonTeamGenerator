@@ -4,16 +4,18 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import com.example.myminiapp.data.ArtPieces
 import com.example.myminiapp.data.ArtRepository
+import androidx.compose.runtime.mutableStateOf
+import com.example.myminiapp.data.Pokemon
 
 class ArtState(private val artRepository: ArtRepository) {
+    var pokemon: MutableState<Pokemon?> = mutableStateOf(null)
 
-    var artwork: MutableState<List<ArtPieces>> = mutableStateOf(emptyList())
+    var pokemonMap: MutableMap<String, Pokemon> = mutableMapOf()
 
-    suspend fun getArtwork() {
-        artwork.value = artRepository.getArtwork().pieces
-    }
-
-    fun getImageUrl(url: String): String {
-        return artRepository.getImageUrl(url)
+    suspend fun getPokemon(pokemonName: String) {
+        if (!pokemonMap.containsKey(pokemonName)) {
+            val pokemon = artRepository.getPokemon(pokemonName)
+            pokemonMap[pokemonName] = pokemon
+        }
     }
 }
