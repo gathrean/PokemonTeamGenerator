@@ -48,6 +48,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.lifecycle.lifecycleScope
+import com.example.myminiapp.data.PokemonRepository
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,69 +57,76 @@ class MainActivity : ComponentActivity() {
         val artRepository = (application as MyApp).artRepository
 
         setContent {
-            val artState = remember { PokemonState(artRepository) }
-            var selectedPokemon by remember { mutableStateOf<String?>(null) }
-            var randomPokemonNames by remember { mutableStateOf<List<String>>(emptyList()) }
-            val coroutineScope = rememberCoroutineScope()
-
-            LaunchedEffect(key1 = artState) {
-                randomPokemonNames = (1..6).map {
-                    val randomPokemon = artState.getRandomPokemon()
-                    artState.getPokemon(randomPokemon.name)
-                    randomPokemon.name
-                }
-            }
-            Box(
-                modifier = Modifier
-                    .background(Color(0xFF304dd2)) // Change to the desired color
-            ) {
-                Column {
-                    // Add a button to generate a new random list of Pokémon
-                    Button(
-                        onClick = {
-                            // Use coroutineScope to launch a coroutine
-                            coroutineScope.launch {
-                                randomPokemonNames = generateRandomPokemonNames(artState)
-                            }
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        content = {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(
-                                    imageVector = Icons.Default.Refresh,
-                                    contentDescription = "Refresh"
-                                )
-                                Text(
-                                    text = "GENERATE RANDOM TEAM",
-                                    modifier = Modifier.padding(start = 4.dp)
-                                )
-                            }
-                        }
-                    )
-
-                    if (selectedPokemon == null) {
-                        MainContent(artState, randomPokemonNames) { pokemonName ->
-                            selectedPokemon =
-                                pokemonName // Update selectedPokemon when an item is clicked
-                        }
-                    } else {
-                        PokemonDetails(artState, selectedPokemon) {
-                            selectedPokemon =
-                                null // Reset selectedPokemon when back button is clicked
-                        }
-                    }
-                }
-            }
+            MyMiniApp(artRepository)
         }
     }
 }
 
 // Function to generate a new random list of Pokémon names
-private suspend fun generateRandomPokemonNames(artState: PokemonState): List<String> {
+suspend fun generateRandomPokemonNames(artState: PokemonState): List<String> {
     return (1..6).map {
         val randomPokemon = artState.getRandomPokemon()
         artState.getPokemon(randomPokemon.name)
         randomPokemon.name
+    }
+}
+
+@Composable
+fun MyMiniApp(
+    artRepository: PokemonRepository
+) {
+    val artState = remember { PokemonState(artRepository) }
+    var selectedPokemon by remember { mutableStateOf<String?>(null) }
+    var randomPokemonNames by remember { mutableStateOf<List<String>>(emptyList()) }
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(key1 = artState) {
+        randomPokemonNames = (1..6).map {
+            val randomPokemon = artState.getRandomPokemon()
+            artState.getPokemon(randomPokemon.name)
+            randomPokemon.name
+        }
+    }
+    Box(
+        modifier = Modifier
+            .background(Color(0xFF304dd2)) // Change to the desired color
+    ) {
+        Column {
+            // Add a button to generate a new random list of Pokémon
+            Button(
+                onClick = {
+                    // Use coroutineScope to launch a coroutine
+                    coroutineScope.launch {
+                        randomPokemonNames = generateRandomPokemonNames(artState)
+                    }
+                },
+                modifier = Modifier.fillMaxWidth(),
+                content = {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = "Refresh"
+                        )
+                        Text(
+                            text = "GENERATE RANDOM TEAM",
+                            modifier = Modifier.padding(start = 4.dp)
+                        )
+                    }
+                }
+            )
+
+            if (selectedPokemon == null) {
+                MainContent(artState, randomPokemonNames) { pokemonName ->
+                    selectedPokemon =
+                        pokemonName // Update selectedPokemon when an item is clicked
+                }
+            } else {
+                PokemonDetails(artState, selectedPokemon) {
+                    selectedPokemon =
+                        null // Reset selectedPokemon when back button is clicked
+                }
+            }
+        }
     }
 }
 
