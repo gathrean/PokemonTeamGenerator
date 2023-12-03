@@ -3,6 +3,9 @@ package com.example.myminiapp.ui.main
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -39,21 +42,26 @@ fun PokemonBox(
                     modifier = Modifier.size(200.dp),
                 )
             }
+            Column(
+                modifier = Modifier
+                    .padding(4.dp)
+                    .fillMaxWidth()
+            ) {
+                Spacer(modifier = Modifier.weight(1f)) // Pushes the text to the bottom
+                Text(
+                    text = pokemon.name
+                        .split("-")
+                        .joinToString(" ") { it ->
+                            it.replaceFirstChar { it.uppercase(Locale.getDefault()) }
+                        },
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFFf5f5ee),
+                    modifier = Modifier
+                        .background(Color(0xFF1c1e20))
+                )
+            }
         }
-        Text(
-            text = pokemon.name
-                .split("-")
-                .joinToString(" ") { it ->
-                    it.replaceFirstChar { it.uppercase(Locale.getDefault()) }
-                },
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFFf9f6ff),
-            modifier = Modifier
-                .padding(4.dp)
-                .background(Color(0xFF1c1e20))
-        )
-
     } else {
         Text("Loading...")
     }
