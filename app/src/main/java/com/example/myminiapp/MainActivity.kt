@@ -3,14 +3,12 @@ package com.example.myminiapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.myminiapp.ui.theme.MyMiniAppTheme
+import androidx.compose.runtime.LaunchedEffect
+import coil.compose.AsyncImage
+import com.example.myminiapp.ui.main.ArtState
 
 /**
  * Name: Gathrean Dela Cruz
@@ -20,8 +18,32 @@ import com.example.myminiapp.ui.theme.MyMiniAppTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
 
+        val artRepository = (application as MyApp).artRepository
+
+        setContent {
+            val artState = ArtState(artRepository)
+
+            LaunchedEffect(
+                key1 = artState,
+                block = {
+                    artState.getArtwork()
+                })
+
+            MainContent(artState)
         }
     }
+}
+
+@Composable
+fun MainContent(artState: ArtState) {
+    LazyColumn(content = {
+        items(artState.artwork.value.size) {
+            Text(artState.artwork.value[it].title)
+            AsyncImage(
+                model = artState.getImageUrl(artState.artwork.value[it].image),
+                contentDescription = null
+            )
+        }
+    })
 }
