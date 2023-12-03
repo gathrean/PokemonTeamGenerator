@@ -30,7 +30,7 @@ fun PokemonBox(
                     onItemClick(pokemon.name) // Pass the clicked Pokemon's name
                 }
                 .background(Color(0xFFf5f5ee))
-                .height(200.dp)
+                .height(160.dp)
         ) {
             pokemon.images.frontDefault.let { imageUrl ->
                 AsyncImage(

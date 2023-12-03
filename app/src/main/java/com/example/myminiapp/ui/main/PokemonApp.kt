@@ -122,13 +122,16 @@ fun PokemonApp(
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
+
                     MyTopAppBar(
                         title = "PokéTeam Generator",
                         showDetails = showDetails,
                         onBackClick = { showDetails = false }
                     )
 
+                    Spacer(modifier = Modifier.height(16.dp))
 
+                    // Row to display the Save Team and View Teams buttons
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly
