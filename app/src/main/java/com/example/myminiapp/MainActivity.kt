@@ -59,6 +59,14 @@ fun MainContent(artState: PokemonState) {
                     modifier = Modifier
                         .size(100.dp)
                 )
+                Text("ID: ${pokemon.id}")
+                Text("Height: ${pokemon.height}")
+                Text("Weight: ${pokemon.weight}")
+                Text("Abilities: ${pokemon.abilities.joinToString { it.ability.name }}")
+                Text("Moves: ${pokemon.moves.joinToString { it.move.name }}")
+                Text("Species: ${pokemon.species.name}")
+                Text("Stats: ${pokemon.stats.joinToString { "${it.stat.name}: ${it.baseStat}" }}")
+                Text("Types: ${pokemon.types.joinToString { it.type.name }}")
             } else {
                 Text("Loading...")
             }
