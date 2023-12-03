@@ -80,6 +80,8 @@ fun PokemonApp(
     var selectedPokemon by remember { mutableStateOf<String?>(null) }
     var randomPokemonNames by remember { mutableStateOf<List<String>>(emptyList()) }
     val coroutineScope = rememberCoroutineScope()
+    var showDetails by remember { mutableStateOf(false) }
+    var selectedPokemonName by remember { mutableStateOf<String?>(null) }
 
     // Function to generate a new random list of Pokémon names
     suspend fun generateRandomPokemonNames(): List<String> {
@@ -100,39 +102,50 @@ fun PokemonApp(
     ) {
         Column {
             TopAppBar(
-                title = { Text(text = "PokéTeam Builder") },
-            )
-
-            Button(
-                onClick = {
-                    coroutineScope.launch {
-                        randomPokemonNames = generateRandomPokemonNames()
-                    }
-                },
-                modifier = Modifier.fillMaxWidth(),
-                content = {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            imageVector = Icons.Default.Refresh,
-                            contentDescription = "Refresh"
-                        )
-                        Text(
-                            text = "GENERATE RANDOM TEAM",
-                            modifier = Modifier.padding(start = 4.dp)
-                        )
+                title = { Text(text = if (showDetails) "Pokemon Details" else "PokéTeam Builder") },
+                navigationIcon = {
+                    if (showDetails) {
+                        IconButton(onClick = { showDetails = false }) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = "Back"
+                            )
+                        }
                     }
                 }
             )
 
-            if (selectedPokemon == null) {
+            if (!showDetails) {
+                Button(
+                    onClick = {
+                        coroutineScope.launch {
+                            randomPokemonNames = generateRandomPokemonNames()
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    content = {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                imageVector = Icons.Default.Refresh,
+                                contentDescription = "Refresh"
+                            )
+                            Text(
+                                text = "GENERATE RANDOM TEAM",
+                                modifier = Modifier.padding(start = 4.dp)
+                            )
+                        }
+                    }
+                )
+            }
+
+            if (!showDetails) {
                 MainContent(artState, randomPokemonNames) { pokemonName ->
-                    selectedPokemon =
-                        pokemonName // Update selectedPokemon when an item is clicked
+                    selectedPokemonName = pokemonName
+                    showDetails = true
                 }
             } else {
-                PokemonDetails(artState, selectedPokemon) {
-                    selectedPokemon =
-                        null // Reset selectedPokemon when back button is clicked
+                selectedPokemonName?.let { name ->
+                    PokemonDetails(artState, name)
                 }
             }
         }
@@ -192,28 +205,15 @@ fun MainContent(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PokemonDetails(
     artState: PokemonState,
-    pokemonName: String?,
-    onBackClicked: () -> Unit
+    pokemonName: String?
 ) {
     val selectedPokemon = pokemonName?.let { artState.pokemonMap[it] }
 
     selectedPokemon?.let { pokemon ->
         Column {
-            TopAppBar(
-                title = { Text(text = "Pokemon Details") },
-                navigationIcon = {
-                    IconButton(onClick = { onBackClicked() }) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
-                },
-            )
 
             AsyncImage(
                 model = pokemon.images.frontDefault,
