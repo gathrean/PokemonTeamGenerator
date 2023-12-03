@@ -60,18 +60,10 @@ fun PokemonApp(
             .background(Color(0xFF304dd2))
     ) {
         Column {
-            TopAppBar(
-                title = { Text(text = if (showDetails) "Pokemon Details" else "PokéTeam Builder") },
-                navigationIcon = {
-                    if (showDetails) {
-                        IconButton(onClick = { showDetails = false }) {
-                            Icon(
-                                imageVector = Icons.Default.ArrowBack,
-                                contentDescription = "Back"
-                            )
-                        }
-                    }
-                }
+            MyTopBar(
+                title = "PokéTeam Builder",
+                showDetails = showDetails,
+                onBackClick = { showDetails = false }
             )
 
             if (!showDetails) {
@@ -109,4 +101,22 @@ fun PokemonApp(
             }
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MyTopBar(title: String, showDetails: Boolean, onBackClick: () -> Unit) {
+    TopAppBar(
+        title = { Text(text = if (showDetails) "Pokemon Details" else title) },
+        navigationIcon = {
+            if (showDetails) {
+                IconButton(onClick = onBackClick) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back"
+                    )
+                }
+            }
+        }
+    )
 }
