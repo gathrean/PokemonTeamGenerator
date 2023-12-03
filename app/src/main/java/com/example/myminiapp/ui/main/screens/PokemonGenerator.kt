@@ -1,4 +1,4 @@
-package com.example.myminiapp.ui.main.app
+package com.example.myminiapp.ui.main.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -18,12 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.myminiapp.data.PokemonRepository
+import com.example.myminiapp.ui.main.app.LoadingCircle
+import com.example.myminiapp.ui.main.app.MyBottomAppBar
+import com.example.myminiapp.ui.main.app.MyTopAppBar
 import com.example.myminiapp.ui.main.state.PokemonState
 import com.example.myminiapp.ui.main.buttons.ButtonsForGeneratePage
-import com.example.myminiapp.ui.main.screens.HomeScreen
-import com.example.myminiapp.ui.main.screens.MainContent
-import com.example.myminiapp.ui.main.screens.PokemonDetails
-import com.example.myminiapp.ui.main.screens.PokemonTeams
 import kotlinx.coroutines.launch
 
 @Composable
