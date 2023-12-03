@@ -63,7 +63,8 @@ class MainActivity : ComponentActivity() {
             ) {
                 if (selectedPokemon == null) {
                     MainContent(artState, randomPokemonNames) { pokemonName ->
-                        selectedPokemon = pokemonName // Update selectedPokemon when an item is clicked
+                        selectedPokemon =
+                            pokemonName // Update selectedPokemon when an item is clicked
                     }
                 } else {
                     PokemonDetails(artState, selectedPokemon) {
@@ -151,27 +152,46 @@ fun PokemonDetails(
                 },
             )
 
-            Text(
-                text = pokemon.name
-                    .split("-")
-                    .joinToString(" ") { it ->
-                        it.replaceFirstChar { it.uppercase(Locale.getDefault()) }
-                    },
-                fontSize = 50.sp
-            )
-
             AsyncImage(
                 model = pokemon.images.frontDefault,
                 contentDescription = null,
                 modifier = Modifier.size(250.dp)
             )
-            Text("ID: ${pokemon.id}")
-            Text("Height: ${pokemon.height}")
-            Text("Weight: ${pokemon.weight}")
-            Text("Abilities: ${pokemon.abilities.joinToString { it.ability.name }}")
-            Text("Moves: ${pokemon.moves.joinToString { it.move.name }}")
-            Text("Stats: ${pokemon.stats.joinToString { "${it.stat.name}: ${it.baseStat}" }}")
-            Text("Types: ${pokemon.types.joinToString { it.type.name }}")
+            Column {
+                Text(
+                    text = pokemon.name
+                        .split("-")
+                        .joinToString(" ") { it ->
+                            it.replaceFirstChar { it.uppercase(Locale.getDefault()) }
+                        },
+                    fontSize = 50.sp,
+                    color = Color.White // Changing Pokemon Name Color to White
+                )
+
+                Column(
+                    modifier = Modifier
+                        .background(Color(0xFFf9f6ff)) // Changing Background Color to Black
+                        .padding(8.dp)
+                ) {
+                    listOf(
+                        "ID: ${pokemon.id}",
+                        "Type(s): ${pokemon.types.joinToString { it.type.name.uppercase() }}",
+                        "Height: ${pokemon.height}",
+                        "Weight: ${pokemon.weight}",
+                        "Abilities: ${pokemon.abilities.joinToString { it.ability.name }}",
+                        buildString {
+                            append("Stats:")
+                            pokemon.stats.forEach {
+                                appendLine()
+                                append("\u2022 ${it.stat.name.uppercase()}: ${it.baseStat}")
+                            }
+                        },
+                    ).forEach {
+                        Text(it, fontSize = 18.sp)
+                    }
+                }
+
+            }
         }
     } ?: Text("Loading...")
 }
