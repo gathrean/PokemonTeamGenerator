@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -47,8 +48,9 @@ fun MainContent(artState: PokemonState) {
         }
     }
 
-    Column {
-        randomPokemonNames.forEach { pokemonName ->
+    LazyColumn {
+        items(randomPokemonNames.size) { index ->
+            val pokemonName = randomPokemonNames[index]
             val pokemon = artState.pokemonMap[pokemonName]
 
             if (pokemon != null) {
@@ -57,7 +59,7 @@ fun MainContent(artState: PokemonState) {
                     model = pokemon.images.frontDefault,
                     contentDescription = null,
                     modifier = Modifier
-                        .size(100.dp)
+                        .size(250.dp)
                 )
                 Text("ID: ${pokemon.id}")
                 Text("Height: ${pokemon.height}")
