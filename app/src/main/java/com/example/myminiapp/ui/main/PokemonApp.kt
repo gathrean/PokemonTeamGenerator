@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
@@ -111,42 +112,48 @@ fun PokemonApp(
                         onBackClick = { showDetails = false }
                     )
 
-// Save Team button
-                    Button(
-                        onClick = {
-                            randomPokemonNames?.let { team ->
-                                saveTeam(team)
-                            }
-                        },
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    ) {
-                        Text(
-                            text = "Save Team",
-                            fontSize = 20.sp
-                        )
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = "Save",
-                            modifier = Modifier.size(25.dp)
-                        )
-                    }
 
-                    // Button to view saved teams
-                    Button(
-                        onClick = {
-                            showSavedTeams = true
-                        },
-                        modifier = Modifier.padding(bottom = 16.dp)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        Text(
-                            text = "View Saved Teams",
-                            fontSize = 20.sp
-                        )
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = "Save",
-                            modifier = Modifier.size(25.dp)
-                        )
+                        // Button to save the generated team
+                        Button(
+                            onClick = {
+                                randomPokemonNames?.let { team ->
+                                    saveTeam(team)
+                                }
+                            },
+                            modifier = Modifier.padding(bottom = 16.dp)
+                        ) {
+                            Text(
+                                text = "Save Team ",
+                                fontSize = 20.sp
+                            )
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = "Save",
+                                modifier = Modifier.size(25.dp)
+                            )
+                        }
+
+                        // Button to view saved teams
+                        Button(
+                            onClick = {
+                                showSavedTeams = true
+                            },
+                            modifier = Modifier.padding(bottom = 16.dp)
+                        ) {
+                            Text(
+                                text = "View Teams ",
+                                fontSize = 20.sp
+                            )
+                            Icon(
+                                imageVector = Icons.Default.List,
+                                contentDescription = "Save",
+                                modifier = Modifier.size(25.dp)
+                            )
+                        }
                     }
 
                     if (!showDetails) {
