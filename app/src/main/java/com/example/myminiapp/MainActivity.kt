@@ -22,6 +22,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +51,7 @@ fun MainContent(artState: PokemonState) {
     var selectedPokemon by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(key1 = artState) {
-        repeat(10) {
+        repeat(9) {
             val randomPokemon = artState.getRandomPokemon()
             randomPokemonNames.add(randomPokemon.name)
             artState.getPokemon(randomPokemon.name)
@@ -71,7 +73,9 @@ fun PokemonList(
     randomPokemonNames: List<String>,
     onItemClick: (String) -> Unit
 ) {
-    LazyColumn {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
+    ) {
         items(randomPokemonNames.size) { index ->
             val pokemonName = randomPokemonNames[index]
             val pokemon = artState.pokemonMap[pokemonName]
@@ -79,14 +83,13 @@ fun PokemonList(
             if (pokemon != null) {
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth()
                         .padding(8.dp)
                         .clickable {
                             onItemClick(pokemonName) // Pass the clicked Pokemon's name
                         }
                 ) {
                     // Display Pokemon sprite instead of the name
-                    pokemon.images.frontDefault.let { imageUrl ->
+                    pokemon.images.frontDefault?.let { imageUrl ->
                         AsyncImage(
                             model = imageUrl,
                             contentDescription = null,
