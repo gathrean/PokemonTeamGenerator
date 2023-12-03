@@ -136,6 +136,30 @@ fun PokemonApp(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
+
+                        // Button to generate a new team
+                        Button(
+                            onClick = {
+                                coroutineScope.launch {
+                                    isLoading = true // Set loading to true before generating
+                                    randomPokemonNames = generateRandomPokemonNames()
+                                    isLoading =
+                                        false // Set loading to false once generation is complete
+                                }
+                            },
+                            modifier = Modifier.padding(bottom = 16.dp)
+                        ) {
+                            Text(
+                                text = "Re-Generate ",
+                                fontSize = 20.sp
+                            )
+                            Icon(
+                                imageVector = Icons.Default.Refresh,
+                                contentDescription = "Refresh",
+                                modifier = Modifier.size(25.dp)
+                            )
+                        }
+
                         // Button to save the generated team
                         Button(
                             onClick = {
@@ -151,24 +175,6 @@ fun PokemonApp(
                             )
                             Icon(
                                 imageVector = Icons.Default.Add,
-                                contentDescription = "Save",
-                                modifier = Modifier.size(25.dp)
-                            )
-                        }
-
-                        // Button to view saved teams
-                        Button(
-                            onClick = {
-                                showSavedTeams = true
-                            },
-                            modifier = Modifier.padding(bottom = 16.dp)
-                        ) {
-                            Text(
-                                text = "View Teams ",
-                                fontSize = 20.sp
-                            )
-                            Icon(
-                                imageVector = Icons.Default.List,
                                 contentDescription = "Save",
                                 modifier = Modifier.size(25.dp)
                             )
