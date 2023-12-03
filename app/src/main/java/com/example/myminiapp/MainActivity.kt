@@ -1,6 +1,5 @@
 package com.example.myminiapp
 
-import android.graphics.fonts.FontFamily
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -41,6 +41,13 @@ import androidx.compose.ui.unit.sp
 import java.util.Locale
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.lifecycle.lifecycleScope
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +59,7 @@ class MainActivity : ComponentActivity() {
             val artState = remember { PokemonState(artRepository) }
             var selectedPokemon by remember { mutableStateOf<String?>(null) }
             var randomPokemonNames by remember { mutableStateOf<List<String>>(emptyList()) }
+            val coroutineScope = rememberCoroutineScope()
 
             LaunchedEffect(key1 = artState) {
                 randomPokemonNames = (1..6).map {
@@ -66,17 +74,27 @@ class MainActivity : ComponentActivity() {
             ) {
                 Column {
                     // Add a button to generate a new random list of Pokémon
-                    IconButton(onClick = {
-                        // Use lifecycleScope to launch a coroutine
-                        lifecycleScope.launch {
-                            randomPokemonNames = generateRandomPokemonNames(artState)
+                    Button(
+                        onClick = {
+                            // Use coroutineScope to launch a coroutine
+                            coroutineScope.launch {
+                                randomPokemonNames = generateRandomPokemonNames(artState)
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        content = {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(
+                                    imageVector = Icons.Default.Refresh,
+                                    contentDescription = "Refresh"
+                                )
+                                Text(
+                                    text = "GENERATE RANDOM TEAM",
+                                    modifier = Modifier.padding(start = 4.dp)
+                                )
+                            }
                         }
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Refresh,
-                            contentDescription = "Refresh"
-                        )
-                    }
+                    )
 
                     if (selectedPokemon == null) {
                         MainContent(artState, randomPokemonNames) { pokemonName ->
@@ -92,7 +110,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-
     }
 }
 
