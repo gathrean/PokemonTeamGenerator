@@ -47,15 +47,31 @@ import kotlinx.coroutines.launch
 fun PokemonApp(
     artRepository: PokemonRepository
 ) {
+    // Manages Pokemon-related states and data
     val artState = remember { PokemonState(artRepository) }
-    var selectedPokemon by remember { mutableStateOf<String?>(null) }
-    var randomPokemonNames by remember { mutableStateOf<List<String>?>(null) } // Nullable list
-    val coroutineScope = rememberCoroutineScope()
-    var showDetails by remember { mutableStateOf(false) }
-    var selectedPokemonName by remember { mutableStateOf<String?>(null) }
-    var isLoading by remember { mutableStateOf(true) } // Track loading state
 
-    // Track saved teams
+    // Coroutine scope for asynchronous operations
+    val coroutineScope = rememberCoroutineScope()
+
+    // Name of the selected Pokemon
+    var selectedPokemonName by remember { mutableStateOf<String?>(null) }
+
+    // Flag to control displaying Pokemon details
+    var showDetails by remember { mutableStateOf(false) }
+
+    // Nullable list of random Pokémon names
+    var randomPokemonNames by remember { mutableStateOf<List<String>?>(null) }
+
+    // Track loading state
+    var isLoading by remember { mutableStateOf(true) }
+
+    // Flag to control displaying the HomeScreen
+    var showHome by remember { mutableStateOf(true) }
+
+    // Flag to control displaying the saved teams
+    var showSavedTeams by remember { mutableStateOf(false) }
+
+    // List of saved teams
     val savedTeams = remember { mutableStateListOf<List<String>>() }
 
     // Function to handle saving a team
@@ -72,21 +88,19 @@ fun PokemonApp(
         }
     }
 
+    // Generate a random team when the app is launched
     LaunchedEffect(key1 = artState) {
         isLoading = true // Set loading to true before generating
         randomPokemonNames = generateRandomPokemonNames()
         isLoading = false // Set loading to false once generation is complete
     }
 
-    var showHome by remember { mutableStateOf(true) }
-    var showSavedTeams by remember { mutableStateOf(false) }
-
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFF304dd2))
     ) {
-        if (showHome) {
+        if (showHome) { // Display the HomeScreen if showHome is true
             HomeScreen(
                 onGenerateClick = { showHome = false },
                 onSaveTeamClick = {
@@ -96,9 +110,11 @@ fun PokemonApp(
                     }
                 }
             )
-        } else if (showSavedTeams) {
+
+        } else if (showSavedTeams) { // Display the saved teams if showSavedTeams is true
             SavedTeamsList(savedTeams = savedTeams)
-        } else {
+
+        } else { // Display the main content otherwise
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -156,6 +172,7 @@ fun PokemonApp(
                         }
                     }
 
+                    // If showDetails is false, display the main content
                     if (!showDetails) {
                         // Display loading indicator while randomPokemonNames is null or isLoading is true
                         if (randomPokemonNames == null || isLoading) {
