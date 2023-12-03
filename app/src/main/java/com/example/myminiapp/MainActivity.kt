@@ -15,6 +15,7 @@ import com.example.myminiapp.ui.main.PokemonState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.myminiapp.data.Pokemon
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,30 +49,40 @@ fun MainContent(artState: PokemonState) {
         }
     }
 
+    PokemonList(artState, randomPokemonNames)
+}
+
+@Composable
+fun PokemonList(artState: PokemonState, randomPokemonNames: List<String>) {
     LazyColumn {
         items(randomPokemonNames.size) { index ->
             val pokemonName = randomPokemonNames[index]
             val pokemon = artState.pokemonMap[pokemonName]
 
             if (pokemon != null) {
-                Text("Name: ${pokemon.name}")
-                AsyncImage(
-                    model = pokemon.images.frontDefault,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(250.dp)
-                )
-                Text("ID: ${pokemon.id}")
-                Text("Height: ${pokemon.height}")
-                Text("Weight: ${pokemon.weight}")
-                Text("Abilities: ${pokemon.abilities.joinToString { it.ability.name }}")
-                Text("Moves: ${pokemon.moves.joinToString { it.move.name }}")
-                Text("Species: ${pokemon.species.name}")
-                Text("Stats: ${pokemon.stats.joinToString { "${it.stat.name}: ${it.baseStat}" }}")
-                Text("Types: ${pokemon.types.joinToString { it.type.name }}")
+                PokemonDetails(pokemon)
             } else {
                 Text("Loading...")
             }
         }
+    }
+}
+
+@Composable
+fun PokemonDetails(pokemon: Pokemon) {
+    Column {
+        Text("Name: ${pokemon.name}")
+        AsyncImage(
+            model = pokemon.images.frontDefault,
+            contentDescription = null,
+            modifier = Modifier.size(250.dp)
+        )
+        Text("ID: ${pokemon.id}")
+        Text("Height: ${pokemon.height}")
+        Text("Weight: ${pokemon.weight}")
+        Text("Abilities: ${pokemon.abilities.joinToString { it.ability.name }}")
+        Text("Moves: ${pokemon.moves.joinToString { it.move.name }}")
+        Text("Stats: ${pokemon.stats.joinToString { "${it.stat.name}: ${it.baseStat}" }}")
+        Text("Types: ${pokemon.types.joinToString { it.type.name }}")
     }
 }
