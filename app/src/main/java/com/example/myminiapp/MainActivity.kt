@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
         val artRepository = (application as MyApp).artRepository
 
         setContent {
-            MyMiniApp(artRepository)
+            PokemonApp(artRepository)
         }
     }
 }
@@ -72,7 +72,7 @@ suspend fun generateRandomPokemonNames(artState: PokemonState): List<String> {
 }
 
 @Composable
-fun MyMiniApp(
+fun PokemonApp(
     artRepository: PokemonRepository
 ) {
     val artState = remember { PokemonState(artRepository) }
