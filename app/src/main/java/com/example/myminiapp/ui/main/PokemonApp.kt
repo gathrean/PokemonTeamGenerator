@@ -10,14 +10,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -61,54 +59,60 @@ fun PokemonApp(
         randomPokemonNames = generateRandomPokemonNames()
     }
 
+    var showHome by remember { mutableStateOf(true) }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFF304dd2))
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
+        if (showHome) {
+            HomeScreen(onGenerateClick = { showHome = false })
+        } else {
             Column(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .fillMaxSize()
             ) {
-                MyTopBar(
-                    title = "PokéTeam Builder",
-                    showDetails = showDetails,
-                    onBackClick = { showDetails = false }
-                )
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    MyTopBar(
+                        title = "PokéTeam Builder",
+                        showDetails = showDetails,
+                        onBackClick = { showDetails = false }
+                    )
 
+                    if (!showDetails) {
+                        MainContent(artState, randomPokemonNames) { pokemonName ->
+                            selectedPokemonName = pokemonName
+                            showDetails = true
+                        }
+                    } else {
+                        selectedPokemonName?.let { name ->
+                            PokemonDetails(artState, name)
+                        }
+                    }
+                }
+
+                // Reserve space for the bottom bar even during loading
                 if (!showDetails) {
-                    MainContent(artState, randomPokemonNames) { pokemonName ->
-                        selectedPokemonName = pokemonName
-                        showDetails = true
-                    }
-                } else {
-                    selectedPokemonName?.let { name ->
-                        PokemonDetails(artState, name)
-                    }
+                    Spacer(modifier = Modifier.height(25.dp))
                 }
-            }
 
-            // Reserve space for the bottom bar even during loading
-            if (!showDetails) {
-                Spacer(modifier = Modifier.height(25.dp))
-            }
-
-            MyBottomAppBar(
-                onHomeClick = {
-                    // Handle home click (navigate home)
-                },
-                onRefreshClick = {
-                    coroutineScope.launch {
-                        randomPokemonNames = generateRandomPokemonNames()
+                MyBottomAppBar(
+                    onRefreshClick = {
+                        coroutineScope.launch {
+                            randomPokemonNames = generateRandomPokemonNames()
+                        }
+                    },
+                    onHomeClick = {
+                        showHome = true
+                    },
+                    onInfoClick = {
+                        // Handle info click (go back to previously selected Pokemon details)
                     }
-                },
-                onInfoClick = {
-                    // Handle info click (go back to previously selected Pokemon details)
-                }
-            )
+                )
+            }
         }
     }
 }
@@ -131,7 +135,6 @@ fun MyTopBar(title: String, showDetails: Boolean, onBackClick: () -> Unit) {
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyBottomAppBar(
     onHomeClick: () -> Unit,
