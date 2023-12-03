@@ -1,5 +1,6 @@
 package com.example.myminiapp
 
+import android.graphics.fonts.FontFamily
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
@@ -33,6 +35,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.capitalize
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import java.util.Locale
 
 class MainActivity : ComponentActivity() {
@@ -47,21 +51,24 @@ class MainActivity : ComponentActivity() {
             var randomPokemonNames by remember { mutableStateOf<List<String>>(emptyList()) }
 
             LaunchedEffect(key1 = artState) {
-                randomPokemonNames = (1..10).map {
+                randomPokemonNames = (1..6).map {
                     val randomPokemon = artState.getRandomPokemon()
                     artState.getPokemon(randomPokemon.name)
                     randomPokemon.name
                 }
             }
-
-            if (selectedPokemon == null) {
-                MainContent(artState, randomPokemonNames) { pokemonName ->
-                    selectedPokemon =
-                        pokemonName // Update the selectedPokemon when an item is clicked
-                }
-            } else {
-                PokemonDetails(artState, selectedPokemon) {
-                    selectedPokemon = null // Reset selectedPokemon when back button is clicked
+            Box(
+                modifier = Modifier
+                    .background(Color(0xFF304dd2)) // Change to the desired color
+            ) {
+                if (selectedPokemon == null) {
+                    MainContent(artState, randomPokemonNames) { pokemonName ->
+                        selectedPokemon = pokemonName // Update selectedPokemon when an item is clicked
+                    }
+                } else {
+                    PokemonDetails(artState, selectedPokemon) {
+                        selectedPokemon = null // Reset selectedPokemon when back button is clicked
+                    }
                 }
             }
         }
@@ -89,21 +96,31 @@ fun MainContent(
                         .clickable {
                             onItemClick(pokemonName) // Pass the clicked Pokemon's name
                         }
-                        .background(Color(0xFF53A3D8))
+                        .background(Color(0xFFf5f5ee))
+                        .height(200.dp)
                 ) {
                     pokemon.images.frontDefault.let { imageUrl ->
-                        Text(
-                            text = pokemon.name.split("-").joinToString(" ") { it -> it.replaceFirstChar { it.uppercase(Locale.getDefault()) } },
-                            modifier = Modifier.padding(8.dp)
-                        )
-
                         AsyncImage(
                             model = imageUrl,
                             contentDescription = null,
-                            modifier = Modifier.size(200.dp)
+                            modifier = Modifier.size(200.dp),
                         )
                     }
                 }
+                Text(
+                    text = pokemon.name
+                        .split("-")
+                        .joinToString(" ") { it ->
+                            it.replaceFirstChar { it.uppercase(Locale.getDefault()) }
+                        },
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold, // Set the text to bold
+                    color = Color(0xFFf9f6ff), // Set the text color to white
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .background(Color(0xFF1c1e20)) // Set the background color to black
+                )
+
             } else {
                 Text("Loading...")
             }
@@ -134,7 +151,15 @@ fun PokemonDetails(
                 },
             )
 
-            Text("Name: ${pokemon.name}")
+            Text(
+                text = pokemon.name
+                    .split("-")
+                    .joinToString(" ") { it ->
+                        it.replaceFirstChar { it.uppercase(Locale.getDefault()) }
+                    },
+                fontSize = 50.sp
+            )
+
             AsyncImage(
                 model = pokemon.images.frontDefault,
                 contentDescription = null,
