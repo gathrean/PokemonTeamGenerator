@@ -1,14 +1,22 @@
 package com.example.myminiapp.ui.main
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -29,8 +37,6 @@ import androidx.compose.ui.unit.dp
 import com.example.myminiapp.data.PokemonRepository
 import kotlinx.coroutines.launch
 
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PokemonApp(
     artRepository: PokemonRepository
@@ -57,48 +63,52 @@ fun PokemonApp(
 
     Box(
         modifier = Modifier
+            .fillMaxSize()
             .background(Color(0xFF304dd2))
     ) {
-        Column {
-            MyTopBar(
-                title = "PokéTeam Builder",
-                showDetails = showDetails,
-                onBackClick = { showDetails = false }
-            )
-
-            if (!showDetails) {
-                Button(
-                    onClick = {
-                        coroutineScope.launch {
-                            randomPokemonNames = generateRandomPokemonNames()
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    content = {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                imageVector = Icons.Default.Refresh,
-                                contentDescription = "Refresh"
-                            )
-                            Text(
-                                text = "GENERATE RANDOM TEAM",
-                                modifier = Modifier.padding(start = 4.dp)
-                            )
-                        }
-                    }
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                MyTopBar(
+                    title = "PokéTeam Builder",
+                    showDetails = showDetails,
+                    onBackClick = { showDetails = false }
                 )
+
+                if (!showDetails) {
+                    MainContent(artState, randomPokemonNames) { pokemonName ->
+                        selectedPokemonName = pokemonName
+                        showDetails = true
+                    }
+                } else {
+                    selectedPokemonName?.let { name ->
+                        PokemonDetails(artState, name)
+                    }
+                }
             }
 
+            // Reserve space for the bottom bar even during loading
             if (!showDetails) {
-                MainContent(artState, randomPokemonNames) { pokemonName ->
-                    selectedPokemonName = pokemonName
-                    showDetails = true
-                }
-            } else {
-                selectedPokemonName?.let { name ->
-                    PokemonDetails(artState, name)
-                }
+                Spacer(modifier = Modifier.height(25.dp))
             }
+
+            MyBottomAppBar(
+                onHomeClick = {
+                    // Handle home click (navigate home)
+                },
+                onRefreshClick = {
+                    coroutineScope.launch {
+                        randomPokemonNames = generateRandomPokemonNames()
+                    }
+                },
+                onInfoClick = {
+                    // Handle info click (go back to previously selected Pokemon details)
+                }
+            )
         }
     }
 }
@@ -119,4 +129,45 @@ fun MyTopBar(title: String, showDetails: Boolean, onBackClick: () -> Unit) {
             }
         }
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MyBottomAppBar(
+    onHomeClick: () -> Unit,
+    onRefreshClick: () -> Unit,
+    onInfoClick: () -> Unit
+) {
+    BottomAppBar(
+        contentPadding = PaddingValues(8.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            IconButton(onClick = { onRefreshClick() }) {
+                Icon(
+                    imageVector = Icons.Default.Refresh,
+                    contentDescription = "Refresh"
+                )
+            }
+
+            IconButton(onClick = { onHomeClick() }) {
+                Icon(
+                    imageVector = Icons.Default.Home,
+                    contentDescription = "Home"
+                )
+            }
+
+            IconButton(onClick = { onInfoClick() }) {
+                Icon(
+                    imageVector = Icons.Default.Info,
+                    contentDescription = "Info"
+                )
+            }
+        }
+    }
 }
