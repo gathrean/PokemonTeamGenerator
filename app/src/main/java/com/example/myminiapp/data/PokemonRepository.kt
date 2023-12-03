@@ -6,7 +6,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 
-class ArtRepository(private val client: HttpClient) {
+class PokemonRepository(private val client: HttpClient) {
 
     suspend fun getRandomPokemon(offset: Int): Pokemon {
         val response = client.get("${ApiEndPoints.POKEMON.url}?offset=$offset&limit=1")

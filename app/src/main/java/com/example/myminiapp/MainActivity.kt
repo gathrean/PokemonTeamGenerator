@@ -5,23 +5,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import coil.compose.AsyncImage
-import com.example.myminiapp.ui.main.ArtState
+import com.example.myminiapp.ui.main.PokemonState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.myminiapp.data.Pokemon
-//import modifier size
-
-/**
- * Name: Gathrean Dela Cruz
- * Student ID: A01167248
- */
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +22,7 @@ class MainActivity : ComponentActivity() {
         val artRepository = (application as MyApp).artRepository
 
         setContent {
-            val artState = remember { ArtState(artRepository) }
+            val artState = remember { PokemonState(artRepository) }
 
             LaunchedEffect(
                 key1 = artState,
@@ -44,7 +36,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainContent(artState: ArtState) {
+fun MainContent(artState: PokemonState) {
     val randomPokemonNames = remember { mutableStateListOf<String>() }
 
     LaunchedEffect(key1 = artState) {

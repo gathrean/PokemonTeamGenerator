@@ -1,13 +1,9 @@
 package com.example.myminiapp.ui.main
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import com.example.myminiapp.data.ArtPieces
-import com.example.myminiapp.data.ArtRepository
-import androidx.compose.runtime.mutableStateOf
+import com.example.myminiapp.data.PokemonRepository
 import com.example.myminiapp.data.Pokemon
 
-class ArtState(private val artRepository: ArtRepository) {
+class PokemonState(private val artRepository: PokemonRepository) {
 
     var pokemonMap: MutableMap<String, Pokemon> = mutableMapOf()
 
