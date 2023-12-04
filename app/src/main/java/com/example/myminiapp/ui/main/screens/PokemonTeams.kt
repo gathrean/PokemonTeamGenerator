@@ -34,7 +34,8 @@ fun PokemonTeams(
                 .fillMaxSize()
         ) {
             MyTopAppBar(
-                title = "My Saved Pokemon Teams",
+                "My Saved Pokemon Teams",
+                true,
                 onBackClick = { navigateBack() } // Adding back navigation here
             )
 
