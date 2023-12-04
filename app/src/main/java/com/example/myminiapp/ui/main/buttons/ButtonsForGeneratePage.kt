@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -50,7 +51,7 @@ fun ButtonsForGeneratePage(
                 fontSize = 20.sp
             )
             Icon(
-                imageVector = Icons.Default.Add,
+                imageVector = Icons.Default.FavoriteBorder,
                 contentDescription = "Save",
                 modifier = Modifier.size(25.dp)
             )
