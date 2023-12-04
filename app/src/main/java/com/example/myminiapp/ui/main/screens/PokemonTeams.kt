@@ -60,9 +60,12 @@ fun PokemonTeams(
             Spacer(modifier = Modifier.height(16.dp))
 
             MyBottomAppBar(
-                onHomeClick = { /* Handle Home Click */ },
-                onRefreshClick = { /* Handle Refresh Click */ },
-                onTeamsClick = { /* Handle Teams Click */ }
+//                onHelpClick = {},
+//                onHomeClick = { showHome = true },
+//                onSavedClick = { showSavedTeamsList = true }
+                onHelpClick = {},
+                onHomeClick = {},
+                onSavedClick = {}
             )
         }
     }
