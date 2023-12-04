@@ -3,7 +3,7 @@ package com.example.myminiapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.myminiapp.ui.main.app.PokemonApp
+import com.example.myminiapp.ui.main.screens.PokemonApp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
