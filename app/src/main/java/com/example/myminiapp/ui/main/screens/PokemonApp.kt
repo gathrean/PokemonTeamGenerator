@@ -50,6 +50,7 @@ fun PokemonApp(
     var showDetails by remember { mutableStateOf(false) }
     var showStartScreen by remember { mutableStateOf(true) }
     var showSavedTeamsList by remember { mutableStateOf(false) }
+    val showHome by remember { mutableStateOf(true) }
 
     // Function to handle saving a team
     fun saveTeam(team: List<String>) {
@@ -92,7 +93,10 @@ fun PokemonApp(
             showSavedTeamsList -> { // Show the list of saved teams
                 PokemonTeams(
                     savedTeams = savedTeams,
-                    navigateBack = { showSavedTeamsList = false }
+                    navigateBack = { showSavedTeamsList = false },
+                    showStartScreen = showStartScreen,
+                    showHome = showHome,
+                    showSavedTeamsList = showSavedTeamsList
                 )
             }
 
