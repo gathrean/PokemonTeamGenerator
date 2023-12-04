@@ -123,7 +123,7 @@ fun PokemonApp(
                             }
                         )
 
-                        Spacer(modifier = Modifier.height(16.dp))
+//                        Spacer(modifier = Modifier.height(5.dp))
 
                         // Show the details of the selected Pokémon
                         selectedPokemonName?.let { name ->
@@ -186,7 +186,7 @@ fun PokemonApp(
                                 selectedPokemonName = pokemonName
                                 showDetails = true
                             }
-                            Spacer(modifier = Modifier.height(25.dp))
+//                            Spacer(modifier = Modifier.height(25.dp))
                         }
 
                     }

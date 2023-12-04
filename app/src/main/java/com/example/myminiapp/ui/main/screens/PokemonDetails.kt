@@ -4,10 +4,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,6 +35,7 @@ fun PokemonDetails(
     selectedPokemon?.let { pokemon ->
         Box(
             modifier = Modifier
+                .fillMaxHeight()
                 .background(Color(0xFFf5f5ee))
                 .padding(18.dp)
                 .fillMaxWidth()
@@ -41,6 +45,10 @@ fun PokemonDetails(
                 modifier = Modifier
                     .padding(8.dp)
                     .fillMaxWidth() // Column spans the available width
+                    .verticalScroll(
+                        state = rememberScrollState(),
+                        enabled = true
+                    ) // Enable vertical scrolling
             ) {
 
                 // Pokemon image
