@@ -87,11 +87,6 @@ fun PokemonApp(
             showStartScreen -> { // Start screen logic
                 StartScreen(
                     onGenerateClick = { showStartScreen = false },
-                    onSaveTeamClick = {
-                        randomPokemonNames?.let { team ->
-                            saveTeam(team)
-                        }
-                    }
                 )
             }
 

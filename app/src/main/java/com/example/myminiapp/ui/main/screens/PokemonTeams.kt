@@ -64,9 +64,6 @@ fun PokemonTeams(
         StartScreen(
             onGenerateClick = {
                 showStartScreenInternal = false
-            },
-            onSaveTeamClick = {
-                // Handle save team action here if needed
             }
         )
     } else {

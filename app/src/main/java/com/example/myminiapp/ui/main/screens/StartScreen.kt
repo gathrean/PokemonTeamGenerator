@@ -26,7 +26,6 @@ import kotlin.random.Random
 @Composable
 fun StartScreen(
     onGenerateClick: () -> Unit,
-    onSaveTeamClick: () -> Unit // Add a callback for Save Team click
 ) {
     val randomPokemonNumber =
         Random.nextInt(1, 151) // Generate a random number between 1 and 10275
@@ -62,7 +61,6 @@ fun StartScreen(
                 onGenerateClick()
                 // Show the Save Team button after generating
                 // Assume the team is generated and ready to be saved
-                onSaveTeamClick()
             },
             modifier = Modifier.padding(bottom = 16.dp)
         ) {
