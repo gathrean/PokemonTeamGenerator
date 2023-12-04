@@ -96,7 +96,8 @@ fun PokemonApp(
                     navigateBack = { showSavedTeamsList = false },
                     showStartScreen = showStartScreen,
                     showHome = showHome,
-                    showSavedTeamsList = showSavedTeamsList
+                    showSavedTeamsList = showSavedTeamsList,
+                    artState = artState // Pass the PokemonState instance
                 )
             }
 

@@ -24,4 +24,10 @@ class PokemonState(private val artRepository: PokemonRepository) {
             pokemonMap[pokemonName] = pokemon
         }
     }
+
+    suspend fun getPokemonImage(pokemonName: String): String? {
+        val pokemon = pokemonMap[pokemonName]
+        return pokemon?.images?.frontDefault
+    }
+
 }

@@ -51,6 +51,9 @@ android {
 
 dependencies {
 
+    // Coil Image loading library
+    implementation ("io.coil-kt:coil-compose:2.5.0")
+
     // Image loading library for Compose
     implementation("io.coil-kt:coil-compose:2.5.0")
 
