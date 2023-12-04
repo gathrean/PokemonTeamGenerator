@@ -18,16 +18,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import kotlin.random.Random
 
 /**
  * StartScreen is a composable that displays the Start Screen.
-
  */
 @Composable
 fun StartScreen(
     onGenerateClick: () -> Unit,
     onSaveTeamClick: () -> Unit // Add a callback for Save Team click
 ) {
+    val randomPokemonNumber =
+        Random.nextInt(1, 151) // Generate a random number between 1 and 10275
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -36,22 +39,26 @@ fun StartScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AsyncImage(
-            model = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+            model = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$randomPokemonNumber.png",
             contentDescription = null,
-            modifier = Modifier.size(200.dp)
+            modifier = Modifier.size(237.dp)
         )
 
         Text(
-
-            text = "Welcome to PokéTeam Generator!",
+            text = "Welcome to",
             color = Color.White,
-            fontSize = 24.sp,
+            fontSize = 27.sp,
+        )
+
+        Text(
+            text = "Pokémon Team Generator!",
+            color = Color.White,
+            fontSize = 30.sp,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
         Button(
             onClick = {
-                onGenerateClick()
                 onGenerateClick()
                 // Show the Save Team button after generating
                 // Assume the team is generated and ready to be saved
