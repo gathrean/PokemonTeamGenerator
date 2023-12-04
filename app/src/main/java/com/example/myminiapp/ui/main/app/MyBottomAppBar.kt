@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.List
@@ -25,9 +26,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun MyBottomAppBar(
+    onHelpClick: () -> Unit,
     onHomeClick: () -> Unit,
-    onRefreshClick: () -> Unit,
-    onTeamsClick: () -> Unit
+    onSavedClick: () -> Unit
 ) {
     BottomAppBar(
         contentPadding = PaddingValues(8.dp)
@@ -39,7 +40,25 @@ fun MyBottomAppBar(
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            // HOME PAGE
+            // Goes back to the Welcome Page
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                IconButton(onClick = { onHelpClick() }) {
+                    Icon(
+                        imageVector = Icons.Default.Info,
+                        contentDescription = "Home",
+                        modifier = Modifier.size(30.dp)
+                    )
+                }
+                Text(
+                    text = "Help",
+                    modifier = Modifier.offset(y = (-5).dp)
+                )
+            }
+
+            // Goes back to the page that generates the team
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
@@ -47,8 +66,9 @@ fun MyBottomAppBar(
                 IconButton(onClick = { onHomeClick() }) {
                     Icon(
                         imageVector = Icons.Default.Home,
-                        contentDescription = "Home",
-                        modifier = Modifier.size(30.dp)
+                        contentDescription = "Refresh",
+                        modifier = Modifier
+                            .size(30.dp)
                     )
                 }
                 Text(
@@ -57,34 +77,15 @@ fun MyBottomAppBar(
                 )
             }
 
-            // GENERATE NEW TEAMS
+
+            // Goes to the page that shows the saved teams
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                IconButton(onClick = { onRefreshClick() }) {
+                IconButton(onClick = { onSavedClick() }) {
                     Icon(
-                        imageVector = Icons.Default.Refresh,
-                        contentDescription = "Refresh",
-                        modifier = Modifier
-                            .size(30.dp)
-                    )
-                }
-                Text(
-                    text = "Generate",
-                    modifier = Modifier.offset(y = (-5).dp)
-                )
-            }
-
-
-            // VIEW TEAMS
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                IconButton(onClick = { onTeamsClick() }) {
-                    Icon(
-                        imageVector = Icons.Default.AccountBox,
+                        imageVector = Icons.Default.Favorite,
                         contentDescription = "My Teams",
                         modifier = Modifier.size(30.dp)
                     )
