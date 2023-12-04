@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
@@ -23,12 +24,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
@@ -37,6 +40,7 @@ import com.example.myminiapp.ui.main.app.MyBottomAppBar
 import com.example.myminiapp.ui.main.app.MyTopAppBar
 import com.example.myminiapp.ui.main.state.PokemonState
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 /**
  * PokemonTeams is a composable that displays a list of saved Pokemon teams.
@@ -86,33 +90,27 @@ fun PokemonTeams(
                         .weight(1f)
                         .padding(16.dp)
                 ) {
-                    items(savedTeams) { team ->
-                        val teamIndex = savedTeams.indexOf(team) + 1 // Calculate team index
-
+                    itemsIndexed(savedTeams) { index, team ->
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .fillMaxSize()
-
                         ) {
-
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier.padding(bottom = 8.dp)
                             ) {
                                 Text(
-                                    text = "Team $teamIndex",
+                                    text = "Team ${team[0].capitalize(Locale.ROOT)}",
                                     fontSize = 30.sp,
                                     color = Color.Black,
-                                    modifier = Modifier.weight(1f)
                                 )
 
                                 Spacer(modifier = Modifier.weight(1f))
 
                                 IconButton(
                                     onClick = {
-                                        // Remove the team at a specific index, for instance, team at index 0
-                                        removeTeam(teamIndex - 1)
+                                        removeTeam(index)
                                     }
                                 ) {
                                     Icon(
