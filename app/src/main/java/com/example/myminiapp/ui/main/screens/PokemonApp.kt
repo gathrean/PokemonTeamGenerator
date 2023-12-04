@@ -34,16 +34,19 @@ fun PokemonApp(
 
     // Pokemon-related data and states
     val artState = remember { PokemonState(artRepository) }
-    var selectedPokemonName by remember { mutableStateOf<String?>(null) }
-    var showDetails by remember { mutableStateOf(false) }
-    var randomPokemonNames by remember { mutableStateOf<List<String>?>(null) }
-    var isLoading by remember { mutableStateOf(true) }
 
-    // Navigation and UI state flags
+    // Name of the selected Pokemon and list of random Pokémon names
+    var selectedPokemonName by remember { mutableStateOf<String?>(null) }
+    var randomPokemonNames by remember { mutableStateOf<List<String>?>(null) }
+
+    // List of saved teams
+    val savedTeams = remember { mutableStateListOf<List<String>>() }
+
+    // Flag to control the current screen
+    var isLoading by remember { mutableStateOf(true) }
+    var showDetails by remember { mutableStateOf(false) }
     var showStartScreen by remember { mutableStateOf(true) }
     var showSavedTeamsList by remember { mutableStateOf(false) }
-    val savedTeams = remember { mutableStateListOf<List<String>>() }
-    val showTeams by remember { mutableStateOf(false) }
 
     // Function to handle saving a team
     fun saveTeam(team: List<String>) {
@@ -86,7 +89,6 @@ fun PokemonApp(
             showSavedTeamsList -> {
                 PokemonTeams(
                     savedTeams = savedTeams,
-                    showTeams = showTeams,
                     navigateBack = { showSavedTeamsList = false }
                 )
             }
@@ -100,7 +102,9 @@ fun PokemonApp(
                     ) {
                         MyTopAppBar(
                             title = "PokéTeam Generator",
-                            onBackClick = { showStartScreen = true }
+                            onBackClick = {
+                                showDetails = false
+                            }
                         )
 
                         Spacer(modifier = Modifier.height(16.dp))
@@ -145,20 +149,6 @@ fun PokemonApp(
                         onStartClick = { showStartScreen = true },
                         onHomeClick = { },
                         onSavedClick = { showSavedTeamsList = true }
-//                    onRefreshClick = {
-//                        coroutineScope.launch {
-//                            isLoading = true // Set loading to true before refreshing
-//                            randomPokemonNames = generateRandomPokemonNames()
-//                            isLoading = false // Set loading to false after refreshing
-//                        }
-//                    },
-//                    onHomeClick = {
-//                        showHome = true
-//                    },
-//                    onTeamsClick = {
-//                        // Handle info click (go back to previously selected Pokemon details)
-//                        showSavedTeamsList = true // Set the flag to display saved teams list
-//                    }
                     )
                 }
             }

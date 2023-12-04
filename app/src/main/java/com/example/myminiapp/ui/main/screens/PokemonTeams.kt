@@ -21,7 +21,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun PokemonTeams(
     savedTeams: List<List<String>>,
-    showTeams: Boolean,
     navigateBack: () -> Unit
 ) {
 
