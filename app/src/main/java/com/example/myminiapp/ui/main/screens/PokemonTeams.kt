@@ -44,7 +44,6 @@ import java.util.Locale
 
 /**
  * PokemonTeams is a composable that displays a list of saved Pokemon teams.
-
  */
 @Composable
 fun PokemonTeams(
