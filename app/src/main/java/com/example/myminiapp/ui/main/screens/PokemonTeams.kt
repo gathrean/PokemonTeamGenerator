@@ -49,6 +49,9 @@ fun PokemonTeams(
     showStartScreen: Boolean,
     showHome: Boolean,
     showSavedTeamsList: Boolean,
+    onStartClick: () -> Unit,
+    onHomeClick: () -> Unit,
+    onSavedClick: () -> Unit,
     artState: PokemonState,
     removeTeam: (Int) -> Unit // Function to remove a team by index
 ) {
@@ -154,9 +157,9 @@ fun PokemonTeams(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 MyBottomAppBar(
-                    onStartClick = { /* use the showStartScreen flag here */ },
-                    onHomeClick = { /* use the showHome flag here */ },
-                    onSavedClick = { /* use the showSavedTeamsList flag here */ }
+                    onStartClick = onStartClick,
+                    onHomeClick = { navigateBack() },
+                    onSavedClick = onSavedClick
                 )
             }
         }
