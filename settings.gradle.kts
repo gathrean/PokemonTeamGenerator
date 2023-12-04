@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MyMiniApp"
+rootProject.name = "PokemonTeamGenerator"
 include(":app")
