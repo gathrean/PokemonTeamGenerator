@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -73,6 +74,10 @@ fun PokemonDetails(
                                 it.replaceFirstChar { it.uppercase(Locale.getDefault()) }
                             },
                         fontSize = 50.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFFf5f5ee),
+                        modifier = Modifier
+                            .background(Color(0xFF1c1e20))
                     )
 
                     // Description
