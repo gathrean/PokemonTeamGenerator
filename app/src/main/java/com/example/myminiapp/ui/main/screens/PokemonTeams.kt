@@ -18,6 +18,10 @@ import com.example.myminiapp.ui.main.app.MyBottomAppBar
 import com.example.myminiapp.ui.main.app.MyTopAppBar
 import kotlinx.coroutines.launch
 
+/**
+ * PokemonTeams is a composable that displays a list of saved Pokemon teams.
+
+ */
 @Composable
 fun PokemonTeams(
     savedTeams: List<List<String>>,

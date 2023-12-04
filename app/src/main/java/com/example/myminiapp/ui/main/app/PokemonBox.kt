@@ -20,6 +20,9 @@ import coil.compose.AsyncImage
 import com.example.myminiapp.data.Pokemon
 import java.util.Locale
 
+/**
+ * PokemonBox is a composable that displays a Pokemon's image and name.
+ */
 @Composable
 fun PokemonBox(
     pokemon: Pokemon?,

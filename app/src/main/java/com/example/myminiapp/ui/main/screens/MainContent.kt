@@ -8,6 +8,9 @@ import androidx.compose.ui.unit.dp
 import com.example.myminiapp.ui.main.app.PokemonBox
 import com.example.myminiapp.ui.main.state.PokemonState
 
+/**
+ * MainContent is a composable that displays a grid of PokemonBox composable.
+ */
 @Composable
 fun MainContent(
     artState: PokemonState,

@@ -13,6 +13,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * LoadingCircle is a composable that displays a loading indicator and text.
+
+ */
 @Composable
 fun LoadingCircle() {
     Box(

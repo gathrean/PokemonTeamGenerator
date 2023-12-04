@@ -24,8 +24,10 @@ import com.example.myminiapp.ui.main.app.MyTopAppBar
 import com.example.myminiapp.ui.main.state.PokemonState
 import com.example.myminiapp.ui.main.buttons.ButtonsForGeneratePage
 import kotlinx.coroutines.launch
-import java.util.Locale
 
+/**
+ * The main screen of the app.
+ */
 @Composable
 fun PokemonApp(
     artRepository: PokemonRepository
@@ -76,7 +78,7 @@ fun PokemonApp(
             .background(Color(0xFF304dd2))
     ) {
         when {
-            showStartScreen -> {
+            showStartScreen -> { // Start screen logic
                 StartScreen(
                     onGenerateClick = { showStartScreen = false },
                     onSaveTeamClick = {
@@ -87,20 +89,21 @@ fun PokemonApp(
                 )
             }
 
-            showSavedTeamsList -> {
+            showSavedTeamsList -> { // Show the list of saved teams
                 PokemonTeams(
                     savedTeams = savedTeams,
                     navigateBack = { showSavedTeamsList = false }
                 )
             }
 
-            showDetails -> {
+            showDetails -> { // Show the details of a selected Pokémon
                 Column(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     Column(
                         modifier = Modifier.weight(1f)
                     ) {
+                        // Show the top bar with the name of the selected Pokémon
                         MyTopAppBar(
                             "$selectedPokemonName Details",
                             true,
@@ -111,12 +114,14 @@ fun PokemonApp(
 
                         Spacer(modifier = Modifier.height(16.dp))
 
+                        // Show the details of the selected Pokémon
                         selectedPokemonName?.let { name ->
                             PokemonDetails(artState, name)
                         }
 
                     }
 
+                    // Show the bottom bar
                     MyBottomAppBar(
                         onStartClick = { showStartScreen = true },
                         onHomeClick = { },
@@ -126,12 +131,16 @@ fun PokemonApp(
             }
 
             else -> {
+                // Default screen
+                // Which just shows the top bar, buttons, 6 random Pokémon, and bottom bar
+
                 Column(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     Column(
                         modifier = Modifier.weight(1f)
                     ) {
+                        // Show the top bar with the app title
                         MyTopAppBar(
                             "PokéTeam Generator",
                             false,
@@ -142,6 +151,7 @@ fun PokemonApp(
 
                         Spacer(modifier = Modifier.height(16.dp))
 
+                        // Row to display the Save Team and View Teams buttons
                         ButtonsForGeneratePage(
                             onGenerateClick = {
                                 coroutineScope.launch {
@@ -157,6 +167,7 @@ fun PokemonApp(
                             }
                         )
 
+                        // Display loading indicator while randomPokemonNames is null or isLoading is true
                         if (randomPokemonNames == null || isLoading) {
                             LoadingCircle()
                         } else {
@@ -169,6 +180,7 @@ fun PokemonApp(
 
                     }
 
+                    // Show the bottom bar
                     MyBottomAppBar(
                         onStartClick = { showStartScreen = true },
                         onHomeClick = { },
@@ -178,9 +190,4 @@ fun PokemonApp(
             }
         }
     }
-}
-
-// Function to format Pokemon name
-fun formatPokemonName(name: String?): String {
-    return name?.split("-")?.joinToString(" ") { it.uppercase(Locale.getDefault()) } ?: ""
 }

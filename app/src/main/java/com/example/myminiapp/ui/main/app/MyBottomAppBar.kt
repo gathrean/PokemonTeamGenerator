@@ -25,6 +25,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+/**
+ * MyBottomAppBar is a composable that displays the bottom app bar.
+
+ */
 @Composable
 fun MyBottomAppBar(
     onStartClick: () -> Unit,

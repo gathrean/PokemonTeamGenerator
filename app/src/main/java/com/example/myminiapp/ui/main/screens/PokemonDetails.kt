@@ -14,6 +14,10 @@ import coil.compose.AsyncImage
 import com.example.myminiapp.ui.main.state.PokemonState
 import java.util.Locale
 
+/**
+ * PokemonDetails is a composable that displays a Pokemon's details.
+
+ */
 @Composable
 fun PokemonDetails(
     artState: PokemonState,

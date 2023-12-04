@@ -17,7 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * ButtonsForGeneratePage is a composable that displays the buttons for the Generate Page.
 
+ */
 @Composable
 fun ButtonsForGeneratePage(
     onGenerateClick: () -> Unit,

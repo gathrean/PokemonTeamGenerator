@@ -19,6 +19,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 
+/**
+ * StartScreen is a composable that displays the Start Screen.
+
+ */
 @Composable
 fun StartScreen(
     onGenerateClick: () -> Unit,
