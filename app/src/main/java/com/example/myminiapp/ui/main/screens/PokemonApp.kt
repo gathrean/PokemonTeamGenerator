@@ -93,6 +93,37 @@ fun PokemonApp(
                 )
             }
 
+            showDetails -> {
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Column(
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        MyTopAppBar(
+                            "PokéTeam Generator",
+                            true,
+                            onBackClick = {
+                                showDetails = false
+                            }
+                        )
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        selectedPokemonName?.let { name ->
+                            PokemonDetails(artState, name)
+                        }
+
+                    }
+
+                    MyBottomAppBar(
+                        onStartClick = { showStartScreen = true },
+                        onHomeClick = { },
+                        onSavedClick = { showSavedTeamsList = true }
+                    )
+                }
+            }
+
             else -> {
                 Column(
                     modifier = Modifier.fillMaxSize()
@@ -101,7 +132,8 @@ fun PokemonApp(
                         modifier = Modifier.weight(1f)
                     ) {
                         MyTopAppBar(
-                            title = "PokéTeam Generator",
+                            "PokéTeam Generator",
+                            false,
                             onBackClick = {
                                 showDetails = false
                             }
@@ -124,25 +156,16 @@ fun PokemonApp(
                             }
                         )
 
-                        if (!showDetails) {
-                            if (randomPokemonNames == null || isLoading) {
-                                LoadingCircle()
-                            } else {
-                                MainContent(artState, randomPokemonNames!!) { pokemonName ->
-                                    selectedPokemonName = pokemonName
-                                    showDetails = true
-                                }
-                            }
+                        if (randomPokemonNames == null || isLoading) {
+                            LoadingCircle()
                         } else {
-                            selectedPokemonName?.let { name ->
-                                PokemonDetails(artState, name)
+                            MainContent(artState, randomPokemonNames!!) { pokemonName ->
+                                selectedPokemonName = pokemonName
+                                showDetails = true
                             }
+                            Spacer(modifier = Modifier.height(25.dp))
                         }
-                    }
 
-                    // Reserve space for the bottom bar even during loading
-                    if (!showDetails) {
-                        Spacer(modifier = Modifier.height(25.dp))
                     }
 
                     MyBottomAppBar(
