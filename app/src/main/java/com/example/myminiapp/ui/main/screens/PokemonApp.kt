@@ -62,7 +62,6 @@ fun PokemonApp(
         savedTeams.removeAt(teamIndex)
     }
 
-
     // Function to generate a new random list of Pokémon names
     suspend fun generateRandomPokemonNames(): List<String> {
         return (1..6).map {
