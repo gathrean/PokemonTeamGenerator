@@ -1,5 +1,9 @@
 # PokemonTeamGenerator
 
+![Bulbasaur](https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png)
+![Ivysaur](https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png)
+![Venusauyr](https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png)
+
 My Kotlin Mini App Project for COMP 3760 (BCIT)
 
 ## Information
