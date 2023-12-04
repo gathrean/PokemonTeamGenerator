@@ -40,7 +40,7 @@ fun PokemonApp(
     var isLoading by remember { mutableStateOf(true) }
 
     // Navigation and UI state flags
-    var showHome by remember { mutableStateOf(true) }
+    var showStartScreen by remember { mutableStateOf(true) }
     var showSavedTeamsList by remember { mutableStateOf(false) }
     val savedTeams = remember { mutableStateListOf<List<String>>() }
     val showTeams by remember { mutableStateOf(false) }
@@ -72,9 +72,9 @@ fun PokemonApp(
             .background(Color(0xFF304dd2))
     ) {
         when {
-            showHome -> {
-                HomeScreen(
-                    onGenerateClick = { showHome = false },
+            showStartScreen -> {
+                StartScreen(
+                    onGenerateClick = { showStartScreen = false },
                     onSaveTeamClick = {
                         randomPokemonNames?.let { team ->
                             saveTeam(team)
@@ -100,7 +100,7 @@ fun PokemonApp(
                     ) {
                         MyTopAppBar(
                             title = "PokéTeam Generator",
-                            onBackClick = { showDetails = false }
+                            onBackClick = { showStartScreen = true }
                         )
 
                         Spacer(modifier = Modifier.height(16.dp))
@@ -136,15 +136,14 @@ fun PokemonApp(
                         }
                     }
 
-
                     // Reserve space for the bottom bar even during loading
                     if (!showDetails) {
                         Spacer(modifier = Modifier.height(25.dp))
                     }
 
                     MyBottomAppBar(
-                        onHelpClick = {},
-                        onHomeClick = { showHome = true },
+                        onStartClick = { showStartScreen = true },
+                        onHomeClick = { },
                         onSavedClick = { showSavedTeamsList = true }
 //                    onRefreshClick = {
 //                        coroutineScope.launch {

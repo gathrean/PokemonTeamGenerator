@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 
 @Composable
-fun HomeScreen(
+fun StartScreen(
     onGenerateClick: () -> Unit,
     onSaveTeamClick: () -> Unit // Add a callback for Save Team click
 ) {

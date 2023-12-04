@@ -63,7 +63,7 @@ fun PokemonTeams(
 //                onHelpClick = {},
 //                onHomeClick = { showHome = true },
 //                onSavedClick = { showSavedTeamsList = true }
-                onHelpClick = {},
+                onStartClick = {},
                 onHomeClick = {},
                 onSavedClick = {}
             )

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
@@ -26,7 +27,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun MyBottomAppBar(
-    onHelpClick: () -> Unit,
+    onStartClick: () -> Unit,
     onHomeClick: () -> Unit,
     onSavedClick: () -> Unit
 ) {
@@ -40,20 +41,20 @@ fun MyBottomAppBar(
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            // Goes back to the Welcome Page
+            // Goes back to the Start Screen
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                IconButton(onClick = { onHelpClick() }) {
+                IconButton(onClick = { onStartClick() }) {
                     Icon(
-                        imageVector = Icons.Default.Info,
-                        contentDescription = "Home",
+                        imageVector = Icons.Default.ExitToApp,
+                        contentDescription = "Start Screen",
                         modifier = Modifier.size(30.dp)
                     )
                 }
                 Text(
-                    text = "Help",
+                    text = "Exit",
                     modifier = Modifier.offset(y = (-5).dp)
                 )
             }
