@@ -114,7 +114,6 @@ fun PokemonApp(
 
                     MyTopAppBar(
                         title = "PokéTeam Generator",
-                        showDetails = showDetails,
                         onBackClick = { showDetails = false }
                     )
 

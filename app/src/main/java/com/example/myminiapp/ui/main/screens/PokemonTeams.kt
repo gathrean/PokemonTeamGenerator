@@ -21,8 +21,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun PokemonTeams(
     savedTeams: List<List<String>>,
-    showTeams: Boolean, // Added parameter to control the title dynamically
-    navigateBack: () -> Unit // Function to navigate back
+    showTeams: Boolean,
+    navigateBack: () -> Unit
 ) {
 
     Box(
@@ -35,9 +35,8 @@ fun PokemonTeams(
                 .fillMaxSize()
         ) {
             MyTopAppBar(
-                title = "My Saved Pokemon Teams", // Set the title for PokemonTeams screen
-                showDetails = false, // Adjust as per your logic
-                onBackClick = { navigateBack() } // Call navigateBack function on back click
+                title = "My Saved Pokemon Teams",
+                onBackClick = { navigateBack() } // Adding back navigation here
             )
 
             Column(
@@ -46,7 +45,6 @@ fun PokemonTeams(
                     .padding(16.dp)
             ) {
 
-                // Display each saved team as a separate item
                 savedTeams.forEachIndexed { index, team ->
                     Text(
                         text = "Team ${index + 1}: $team",
@@ -56,14 +54,11 @@ fun PokemonTeams(
                     )
                 }
 
-                // Use Spacer with weight to fill remaining space
                 Spacer(modifier = Modifier.weight(1f))
             }
 
-            // Add a Spacer with a minimum height to maintain a gap between content and BottomAppBar
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Add MyBottomAppBar
             MyBottomAppBar(
                 onHomeClick = { /* Handle Home Click */ },
                 onRefreshClick = { /* Handle Refresh Click */ },

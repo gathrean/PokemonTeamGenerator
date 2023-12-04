@@ -13,20 +13,22 @@ import androidx.compose.runtime.Composable
 @Composable
 fun MyTopAppBar(
     title: String,
-    showDetails: Boolean,
     onBackClick: () -> Unit
 ) {
     TopAppBar(
-        title = { Text(text = if (showDetails) "Pokemon Details" else title) },
+        title = {
+            Text(
+                text = title
+            )
+        },
         navigationIcon = {
-            if (showDetails) {
                 IconButton(onClick = onBackClick) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = "Back"
                     )
                 }
-            }
+
         }
     )
 }
