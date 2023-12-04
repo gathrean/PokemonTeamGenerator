@@ -14,6 +14,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -43,7 +49,8 @@ fun PokemonTeams(
     showStartScreen: Boolean,
     showHome: Boolean,
     showSavedTeamsList: Boolean,
-    artState: PokemonState
+    artState: PokemonState,
+    removeTeam: (Int) -> Unit // Function to remove a team by index
 ) {
     var showStartScreenInternal by remember { mutableStateOf(showStartScreen) }
 
@@ -60,7 +67,7 @@ fun PokemonTeams(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFF606060))
+                .background(Color(0xFF304dd2))
         ) {
             Column(
                 modifier = Modifier.fillMaxSize()
@@ -79,18 +86,48 @@ fun PokemonTeams(
                     items(savedTeams) { team ->
                         val teamIndex = savedTeams.indexOf(team) + 1 // Calculate team index
 
-                        Column {
-                            Text(
-                                text = "Team $teamIndex:",
-                                fontSize = 24.sp,
-                                color = Color.Black,
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxSize()
+
+                        ) {
+
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier.padding(bottom = 8.dp)
-                            )
+                            ) {
+                                Text(
+                                    text = "Team $teamIndex",
+                                    fontSize = 30.sp,
+                                    color = Color.Black,
+                                    modifier = Modifier.weight(1f)
+                                )
+
+                                Spacer(modifier = Modifier.weight(1f))
+
+                                IconButton(
+                                    onClick = {
+                                        // Remove the team at a specific index, for instance, team at index 0
+                                        removeTeam(teamIndex - 1)
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Delete,
+                                        contentDescription = "Delete Team"
+                                    )
+                                }
+                            }
 
                             val chunkedTeam = team.chunked(3)
 
                             chunkedTeam.forEach { rowTeam ->
-                                Row {
+                                Row(
+                                    modifier = Modifier
+                                        .background(Color(0xFFE0E0E0))
+                                        .fillMaxWidth()
+                                        .padding(bottom = 8.dp)
+                                ) {
                                     rowTeam.forEach { pokemonName ->
                                         val image = remember { mutableStateOf<String?>(null) }
 
