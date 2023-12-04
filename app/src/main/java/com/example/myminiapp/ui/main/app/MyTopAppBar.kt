@@ -12,16 +12,18 @@ import androidx.compose.runtime.Composable
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyTopAppBar(
-    title: String,
+    selectedPokemonName: String?,
     showBackButton: Boolean,
     onBackClick: () -> Unit
 ) {
     TopAppBar(
         title = {
-            Text(text = title)
+            selectedPokemonName?.let { name ->
+                Text(text = formatPokemonName(name))
+            }
         },
         navigationIcon = {
-            if (showBackButton) { // Only show the back button if we want it
+            if (showBackButton) {
                 IconButton(onClick = onBackClick) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
@@ -31,4 +33,8 @@ fun MyTopAppBar(
             }
         }
     )
+}
+
+fun formatPokemonName(name: String): String {
+    return name.split("-").joinToString(" ") { it.capitalize() }
 }

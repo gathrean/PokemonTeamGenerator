@@ -24,6 +24,7 @@ import com.example.myminiapp.ui.main.app.MyTopAppBar
 import com.example.myminiapp.ui.main.state.PokemonState
 import com.example.myminiapp.ui.main.buttons.ButtonsForGeneratePage
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @Composable
 fun PokemonApp(
@@ -101,7 +102,7 @@ fun PokemonApp(
                         modifier = Modifier.weight(1f)
                     ) {
                         MyTopAppBar(
-                            "PokéTeam Generator",
+                            "$selectedPokemonName Details",
                             true,
                             onBackClick = {
                                 showDetails = false
@@ -177,4 +178,9 @@ fun PokemonApp(
             }
         }
     }
+}
+
+// Function to format Pokemon name
+fun formatPokemonName(name: String?): String {
+    return name?.split("-")?.joinToString(" ") { it.uppercase(Locale.getDefault()) } ?: ""
 }
